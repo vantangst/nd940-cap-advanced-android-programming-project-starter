@@ -2,12 +2,11 @@ package com.example.android.politicalpreparedness.election
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.android.politicalpreparedness.database.ElectionDao
+import com.example.android.politicalpreparedness.network.models.AdministrationBody
 import com.example.android.politicalpreparedness.network.models.Election
 import com.example.android.politicalpreparedness.repository.ElectionRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class VoterInfoViewModel(private val repository: ElectionRepository) : ViewModel() {
@@ -16,10 +15,23 @@ class VoterInfoViewModel(private val repository: ElectionRepository) : ViewModel
     val electionDataFlow: StateFlow<Election>
         get() = _electionDataFlow
 
+    private val _administrationDataFlow = MutableStateFlow(AdministrationBody())
+    val administrationDataFlow: StateFlow<AdministrationBody>
+        get() = _administrationDataFlow
+
     fun initData(electionId: Int) {
         viewModelScope.launch {
             repository.getElection(electionId)?.let {
                 _electionDataFlow.value = it
+                getVoterInfo(it.division.address, it.id)
+            }
+        }
+    }
+
+    private fun getVoterInfo(address: String, electionId: Int) {
+        viewModelScope.launch {
+            repository.getVoterInfo(address, electionId)?.let {
+                _administrationDataFlow.value = it
             }
         }
     }

@@ -2,6 +2,7 @@ package com.example.android.politicalpreparedness.repository
 
 import com.example.android.politicalpreparedness.database.ElectionDao
 import com.example.android.politicalpreparedness.network.CivicsApiService
+import com.example.android.politicalpreparedness.network.models.AdministrationBody
 import com.example.android.politicalpreparedness.network.models.Election
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
@@ -46,6 +47,14 @@ interface ElectionRepository {
      * @return an Election if success, null if failed
      */
     suspend fun getElection(electionId: Int): Election?
+
+    /**
+     * get Elections from local database
+     * @param electionId the id of election
+     * @param address The registered address of the voter to look up.
+     * @return an Election if success, null if failed
+     */
+    suspend fun getVoterInfo(address: String, electionId: Int): AdministrationBody?
 }
 
 class ElectionRepositoryImpl(
@@ -115,6 +124,17 @@ class ElectionRepositoryImpl(
     override suspend fun getElection(electionId: Int): Election? {
         return withContext(ioDispatcher) {
             electionDao.getElection(electionId)
+        }
+    }
+
+    override suspend fun getVoterInfo(address: String, electionId: Int): AdministrationBody? {
+        return withContext(ioDispatcher) {
+            try {
+                civicsApiService.getVoterInfo(address, electionId).state?.firstOrNull()?.electionAdministrationBody
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
         }
     }
 

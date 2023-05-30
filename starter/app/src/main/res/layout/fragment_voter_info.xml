@@ -3,7 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Add data binding node for Voter Info ViewModel -->
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.android.politicalpreparedness.election.VoterInfoViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,6 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/default_padding"
+            tools:title="Title"
+            app:title="@{viewModel.electionDataFlow.name}"
+            app:titleTextColor="@color/white"
+            android:background="@color/colorPrimaryDark"
             android:singleLine="true"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,6 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_padding"
+            displayDate="@{viewModel.electionDataFlow.electionDay}"
             app:layout_constraintTop_toBottomOf="@id/election_name"
             tools:text="12 November 2055" />
 
@@ -33,6 +42,8 @@
             android:id="@+id/state_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            style="@style/TextViewTitle"
+            android:text="@string/election_information"
             app:layout_constraintTop_toBottomOf="@id/election_date"
             app:layout_constraintStart_toStartOf="@id/election_date" />
 
@@ -42,6 +53,8 @@
             android:id="@+id/state_locations"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            onClickVoterInfoLink="@{viewModel.administrationDataFlow.votingLocationFinderUrl}"
+            android:text="@string/voting_locations"
             app:layout_constraintTop_toBottomOf="@id/state_header"
             app:layout_constraintStart_toStartOf="@id/election_date" />
 
@@ -51,6 +64,8 @@
             android:id="@+id/state_ballot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            onClickVoterInfoLink="@{viewModel.administrationDataFlow.ballotInfoUrl}"
+            android:text="@string/ballot_information"
             app:layout_constraintTop_toBottomOf="@id/state_locations"
             app:layout_constraintStart_toStartOf="@id/election_date" />
 
@@ -65,6 +80,8 @@
             android:id="@+id/state_correspondence_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            tools:text="header"
+            android:text="@{viewModel.administrationDataFlow.correspondenceAddress.state}"
             app:layout_constraintTop_toBottomOf="@id/state_ballot"
             app:layout_constraintStart_toStartOf="@id/election_date" />
 
@@ -73,10 +90,24 @@
             android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            tools:text="Address"
+            android:text="@{viewModel.administrationDataFlow.correspondenceAddress.line1}"
             app:layout_constraintTop_toBottomOf="@id/state_correspondence_header"
             app:layout_constraintStart_toStartOf="@id/election_date" />
 
-        <!-- TODO: Add button to save election to Room -->
+        <Button
+            android:id="@+id/btnFollowToggle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/MainButton"
+            tools:text="@string/follow_election"
+            android:onClick="@{() -> viewModel.toggleFavoriteElection()}"
+            toggleTitle="@{viewModel.electionDataFlow.favorite}"
+            android:layout_marginVertical="@dimen/default_padding"
+            android:layout_marginBottom="@dimen/default_padding"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
