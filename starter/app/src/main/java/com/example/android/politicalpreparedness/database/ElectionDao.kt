@@ -1,22 +1,44 @@
 package com.example.android.politicalpreparedness.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+
+import androidx.room.*
 import com.example.android.politicalpreparedness.network.models.Election
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ElectionDao {
 
-    //TODO: Add insert query
+    // insert item
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg elections: Election)
 
-    //TODO: Add select all election query
+    @Insert
+    fun insert(asteroid: Election)
 
-    //TODO: Add select single election query
+    // select all election query
+    @Query("select * from election_table")
+    fun getAll(): Flow<List<Election>>
 
-    //TODO: Add delete query
+    @Query("select * from election_table")
+    fun getAllWithoutFlow(): List<Election>
 
-    //TODO: Add clear query
+    @Query("select * from election_table where is_favorite = :isFavorite")
+    fun getWith(isFavorite: Boolean): Flow<List<Election>>
+
+    @Update
+    fun update(election: Election): Int
+
+
+    // select single election item
+    @Query("select * from election_table where id = :electionId")
+    fun getElection(electionId: Int): Election?
+
+    //delete one item
+    @Query("delete from election_table where id = :electionId")
+    fun delete(electionId: Int): Int
+
+    //clear all item
+    @Query("delete from election_table")
+    fun deleteAll(): Int
 
 }
