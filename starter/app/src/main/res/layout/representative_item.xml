@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="representative"
+            type="com.example.android.politicalpreparedness.representative.model.Representative" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/normal_margin">
+
+        <ImageView
+            android:id="@+id/iv_representative"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_profile"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/normal_margin"
+            app:layout_constraintStart_toEndOf="@+id/iv_representative"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Title"/>
+
+        <ImageView
+            android:id="@+id/iv_twitter"
+            android:layout_width="@dimen/representative_icon_size"
+            android:layout_height="@dimen/representative_icon_size"
+            android:src="@drawable/ic_twitter"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <ImageView
+            android:id="@+id/iv_facebook"
+            android:layout_width="@dimen/representative_icon_size"
+            android:layout_height="@dimen/representative_icon_size"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:src="@drawable/ic_facebook"
+            app:layout_constraintTop_toTopOf="@id/iv_twitter"
+            app:layout_constraintEnd_toStartOf="@id/iv_twitter"/>
+
+        <ImageView
+            android:id="@+id/iv_www"
+            android:layout_width="@dimen/representative_icon_size"
+            android:layout_height="@dimen/representative_icon_size"
+            android:layout_marginEnd="@dimen/normal_margin"
+            android:src="@drawable/ic_www"
+            app:layout_constraintTop_toTopOf="@id/iv_twitter"
+            app:layout_constraintEnd_toStartOf="@id/iv_facebook"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
