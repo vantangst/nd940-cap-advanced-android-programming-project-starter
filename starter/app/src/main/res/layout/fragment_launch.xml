@@ -8,11 +8,41 @@
         android:layout_height="match_parent"
         tools:context="com.example.android.politicalpreparedness.MainActivity">
 
-        <!-- TODO: Add image for home screen logo. -->
 
-        <!-- TODO: Add Button to navigate to upcoming elections. -->
 
-        <!-- TODO: Add Button to navigate to representatives. -->
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintDimensionRatio="0.7:0.6"
+            app:layout_constraintBottom_toTopOf="@id/btn_upcoming"
+            android:contentDescription="@string/launching_logo_description"
+            android:src="@drawable/ballot_logo"/>
+
+        <Button
+            android:id="@+id/btn_upcoming"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/upcoming_elections"
+            android:layout_marginHorizontal="@dimen/normal_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_representatives"
+            style="@style/MainButton" />
+
+        <Button
+            android:id="@+id/btn_representatives"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_margin"
+            android:text="@string/find_my_representatives"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/normal_margin"
+            style="@style/MainButton"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
