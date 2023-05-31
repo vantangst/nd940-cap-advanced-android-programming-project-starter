@@ -18,8 +18,10 @@
         <!-- TODO: Add visual styling and content -->
         <TextView
             android:id="@+id/search_title"
+            style="@style/TextViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/representatives_search"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,6 +32,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints=""
+            android:text="@={viewModel.addressDataFlow.line1}"
+            android:hint="@string/address_line_1"
             android:inputType="textPostalAddress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/search_title" />
@@ -41,6 +45,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:autofillHints=""
+            android:text="@={viewModel.addressDataFlow.line2}"
+            android:hint="@string/address_line_2"
             android:inputType="textPostalAddress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/address_line_1" />
@@ -52,6 +58,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:autofillHints=""
+            android:text="@={viewModel.addressDataFlow.city}"
+            android:hint="@string/city"
             android:inputType="textPostalAddress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/state"
@@ -65,6 +73,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:autofillHints=""
+            stateValue="@{viewModel.addressDataFlow.state}"
             android:inputType="textPostalAddress"
             app:layout_constraintStart_toEndOf="@id/city"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,6 +87,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:autofillHints=""
+            android:text="@={viewModel.addressDataFlow.zip}"
+            android:hint="@string/zip"
             android:inputType="number"
             android:maxLength="5"
             app:layout_constraintStart_toStartOf="parent"
@@ -87,15 +98,24 @@
         <!-- TODO: Add visual styling and label -->
         <Button
             android:id="@+id/button_search"
-            android:layout_width="match_parent"
+            style="@style/MainButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> viewModel.getRepresentatives()}"
+            android:text="@string/find_my_representatives"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/zip" />
 
         <!-- TODO: Add visual styling and content -->
         <Button
             android:id="@+id/button_location"
-            android:layout_width="match_parent"
+            style="@style/MainButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:text="@string/use_my_locations"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/button_search" />
 
         <!-- TODO: Add visual styling and content -->
@@ -107,6 +127,15 @@
             app:layout_constraintTop_toBottomOf="@id/button_location" />
 
         <!-- TODO: Add Representatives RecyclerView -->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_representative"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/default_padding"
+            app:layout_constraintTop_toBottomOf="@+id/button_location"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         <!-- TODO: Add visual styling and content -->
         <TextView

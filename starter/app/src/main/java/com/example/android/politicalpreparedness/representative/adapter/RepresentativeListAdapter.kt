@@ -116,4 +116,6 @@ class RepresentativeDiffCallback : DiffUtil.ItemCallback<Representative>() {
 }
 
 // Create RepresentativeListener
-class RepresentativeListener(val invoke: (Representative) -> Unit)
+class RepresentativeListener(val listener: (Representative) -> Unit) {
+
+}

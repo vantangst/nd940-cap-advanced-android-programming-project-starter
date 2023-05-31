@@ -10,21 +10,33 @@ import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.example.android.politicalpreparedness.R
 import com.example.android.politicalpreparedness.databinding.FragmentRepresentativeBinding
 import com.example.android.politicalpreparedness.network.models.Address
+import com.example.android.politicalpreparedness.representative.adapter.RepresentativeListAdapter
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.Locale
 
 class RepresentativeFragment : Fragment() {
 
     private lateinit var binding: FragmentRepresentativeBinding
-    private val viewModel: RepresentativeViewModel by viewModels()
+    private val viewModel: RepresentativeViewModel by viewModel()
     private var permissionDialog: AlertDialog? = null
 
     override fun onCreateView(
@@ -39,8 +51,33 @@ class RepresentativeFragment : Fragment() {
         binding.viewModel = viewModel
 
         //TODO: Define and assign Representative adapter
+        val adapter = RepresentativeListAdapter()
+        binding.rvRepresentative.adapter = adapter
 
         //TODO: Populate Representative adapter
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.representativesDataFlow.collect {
+                    adapter.submitList(it)
+                }
+            }
+        }
+
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            R.array.states,
+            android.R.layout.simple_spinner_item
+        ).also { arrayAdapter ->
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            binding.state.adapter = arrayAdapter
+        }
+        binding.state.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(adapterView: AdapterView<*>?, view: View?, pos: Int, id: Long) {
+                Log.i("RepresentativeFragment", "onState Selected: ${adapterView?.getItemAtPosition(pos)}")
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+        }
 
         //TODO: Establish button listeners for field and location search
 
