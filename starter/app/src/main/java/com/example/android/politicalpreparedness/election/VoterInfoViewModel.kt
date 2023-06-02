@@ -11,10 +11,12 @@ import kotlinx.coroutines.launch
 
 class VoterInfoViewModel(private val repository: ElectionRepository) : ViewModel() {
 
+    // Add live data to hold voter info
     private val _electionDataFlow = MutableStateFlow(Election())
     val electionDataFlow: StateFlow<Election>
         get() = _electionDataFlow
 
+    //Add var and methods to populate voter info
     private val _administrationDataFlow = MutableStateFlow(AdministrationBody())
     val administrationDataFlow: StateFlow<AdministrationBody>
         get() = _administrationDataFlow
@@ -28,6 +30,7 @@ class VoterInfoViewModel(private val repository: ElectionRepository) : ViewModel
         }
     }
 
+    // Add var and methods to support loading URLs
     private fun getVoterInfo(address: String, electionId: Int) {
         viewModelScope.launch {
             repository.getVoterInfo(address, electionId)?.let {
@@ -38,6 +41,7 @@ class VoterInfoViewModel(private val repository: ElectionRepository) : ViewModel
 
 
 
+    // Add var and methods to save and remove elections to local database
     fun toggleFavoriteElection() {
         val electionId = _electionDataFlow.value.id
         viewModelScope.launch {
@@ -49,15 +53,6 @@ class VoterInfoViewModel(private val repository: ElectionRepository) : ViewModel
             }
         }
     }
-
-    //TODO: Add live data to hold voter info
-
-    //TODO: Add var and methods to populate voter info
-
-    //TODO: Add var and methods to support loading URLs
-
-    //TODO: Add var and methods to save and remove elections to local database
-    //TODO: cont'd -- Populate initial state of save button to reflect proper action based on election saved status
 
     /**
      * Hint: The saved state can be accomplished in multiple ways. It is directly related to how elections are saved/removed from the database.

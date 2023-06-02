@@ -24,20 +24,12 @@ class VoterInfoFragment : Fragment() {
         binding.viewModel = viewModel
         viewModel.initData(args.argElectionId)
 
-        //TODO: Populate voter info -- hide views without provided data.
+        //Populate voter info -- hide views without provided data.
         /**
         Hint: You will need to ensure proper data is provided from previous fragment.
          */
-
-
-        //TODO: Handle loading of URLs
-
-        //TODO: Handle save button UI state
-        //TODO: cont'd Handle save button clicks
         return binding.root
 
     }
-
-    //TODO: Create method to load URL intents
 
 }

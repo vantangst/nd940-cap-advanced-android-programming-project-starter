@@ -8,6 +8,7 @@
     <string name="saved_elections">Saved Elections</string>
     <string name="representatives_search">Representatives Search</string>
     <string name="find_my_representatives">Find My Representatives</string>
+    <string name="my_representatives">My Representatives</string>
     <string name="election_information">Election Information</string>
     <string name="voting_locations">Voting Locations</string>
     <string name="ballot_information">Ballot Information</string>
@@ -26,5 +27,9 @@
     <string name="address_line_2">Address line 2</string>
     <string name="city">City</string>
     <string name="zip">Zip</string>
+
+    <string name="facebook_link_description">Navigate to Facebook of representative</string>
+    <string name="twitter_link_description">Navigate to Twitter of representative</string>
+    <string name="www_link_description">Navigate to Website of representative</string>
 
 </resources>
