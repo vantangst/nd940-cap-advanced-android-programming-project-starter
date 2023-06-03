@@ -39,6 +39,7 @@ class RepresentativeViewModel(private val repository: RepresentativeRepository) 
         viewModelScope.launch {
             _addressDataFlow.value = address
         }
+        getRepresentatives()
     }
 
     fun getRepresentatives() {
